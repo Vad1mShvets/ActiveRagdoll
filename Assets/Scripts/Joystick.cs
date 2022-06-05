@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour
 {
+    public float DeadZone;
+
     [HideInInspector] public float PositionX;
     [HideInInspector] public float PositionY;
 
@@ -10,7 +12,6 @@ public class Joystick : MonoBehaviour
     [SerializeField] private Image _joystickCenter;
 
     [SerializeField] private float _dragLimit;
-    [SerializeField] private float _deadZone;
 
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class Joystick : MonoBehaviour
         Vector2 normalizedDirection = direction.normalized;
         Vector2 fixedDirection = normalizedDirection * _dragLimit;
 
-        if (fixedDirection.magnitude > _deadZone)
+        if (fixedDirection.magnitude > DeadZone)
         {
             _joystickCenter.rectTransform.position = _joystickBorder.rectTransform.position + new Vector3(fixedDirection.x, fixedDirection.y, 0);
             PositionX = normalizedDirection.x;
@@ -42,5 +43,8 @@ public class Joystick : MonoBehaviour
     public void PointerUp()
     {
         _joystickBorder.gameObject.SetActive(false);
+
+        PositionX = 0;
+        PositionY = 0;
     }
 }
