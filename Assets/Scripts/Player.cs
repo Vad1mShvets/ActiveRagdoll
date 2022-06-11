@@ -1,24 +1,61 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public interface IAlive
 {
-    [SerializeField] private ConfigurableJoint _pelvis;
+    void Die();
+}
+
+public class Player : MonoBehaviour, IAlive
+{
+    public Vector3 SpawnPoint { get; set; } 
 
     [SerializeField] private Joystick _joystick;
 
     [SerializeField] private Animator _animator;
 
+    private ConfigurableJoint _pelvis;
+
+    private void Awake()
+    {
+        SpawnPoint = transform.position + Vector3.up * 5;
+
+        _pelvis = GetComponent<ConfigurableJoint>();
+    }
+
     private void FixedUpdate()
     {
         //_pelvis.targetRotation =
 
-        if (_joystick.PositionX > _joystick.DeadZone && _joystick.PositionY > _joystick.DeadZone)
+        if (_joystick.PositionX != 0 && _joystick.PositionY != 0)
         {
-            _animator.Play("Run");
+            Move();
         }
         else
         {
-            _animator.Play("Idle");
+            StopMoving();
         }
+    }
+
+    private void Update()
+    {
+        if (transform.position.y < SpawnPoint.y - 20)
+        {
+            Die();
+        }
+    }
+
+    private void Move()
+    {
+        _animator.Play("Run");
+    }
+
+    private void StopMoving()
+    {
+        _animator.Play("Idle");
+    }
+
+    public void Die()
+    {
+        transform.position = SpawnPoint;
     }
 }
