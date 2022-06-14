@@ -22,10 +22,8 @@ public class Player : MonoBehaviour, IAlive
         _pelvis = GetComponent<ConfigurableJoint>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        //_pelvis.targetRotation =
-
         if (_joystick.PositionX != 0 && _joystick.PositionY != 0)
         {
             Move();
@@ -34,10 +32,7 @@ public class Player : MonoBehaviour, IAlive
         {
             StopMoving();
         }
-    }
 
-    private void Update()
-    {
         if (transform.position.y < SpawnPoint.y - 20)
         {
             Die();
@@ -57,5 +52,7 @@ public class Player : MonoBehaviour, IAlive
     public void Die()
     {
         transform.position = SpawnPoint;
+
+        _pelvis.targetRotation = Quaternion.Euler(0, 0, 0);
     }
 }

@@ -65505,7 +65505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561a4cf9f09914344999eb4f52e6d0e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pelvis: {fileID: 1465338931}
   _joystick: {fileID: 1605347607}
   _animator: {fileID: 370379748}
 --- !u!1 &1469614784
